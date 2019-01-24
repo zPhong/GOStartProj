@@ -1,84 +1,83 @@
 /* eslint-disable no-undef */
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import BorderTextInput from "./component/TextInput/BorderTextInput";
+import {
+  createSwitchNavigator,
+  createAppContainer,
+  createStackNavigator
+} from "react-navigation";
+import { Provider } from "mobx-react";
+import { SafeAreaView, View } from "react-native";
+import store from "store";
+import SplashScreen from "screen/SplashScreen/SplashScreen";
+import CompanyCode from "screen/Login/CompanyCode";
+import { LargeAppLogo, VisaLogo } from "Assets/Image";
+
+const RootStack = createAppContainer(
+  createSwitchNavigator(
+    {
+      SplashScreen: {
+        screen: props => (
+          <SplashScreen
+            {...props}
+            contentConfig={{
+              logo: { image: LargeAppLogo, width: 287, height: 192 },
+              nextScreen: "CompanyCode",
+              timeout: 3000
+            }}
+          />
+        ),
+        navigationOptions: {
+          header: null
+        }
+      },
+      Main: {
+        screen: createStackNavigator({
+          CompanyCode: {
+            screen: CompanyCode,
+            navigationOptions: {
+              header: null
+            }
+          },
+          Loading: {
+            screen: props => (
+              <SplashScreen
+                {...props}
+                contentConfig={{
+                  logo: { image: VisaLogo, width: 249, height: 105 },
+                  nextScreen: "Login",
+                  timeout: 30000,
+                  loading: true
+                }}
+              />
+            ),
+            navigationOptions: {
+              header: null
+            }
+          }
+        }),
+        navigationOptions: {
+          header: null
+        }
+      }
+    },
+    {
+      initialRouteName: "SplashScreen"
+    }
+  )
+);
 
 type Props = {};
-type State = { email: string, password: string };
-
-const config = [
-  {
-    icon: "email",
-    width: 20,
-    height: 15,
-    color: "#1154ff",
-    placehoder: "Email",
-    isHiding: false
-  },
-  {
-    icon: "password",
-    width: 16,
-    height: 20,
-    color: "#000000",
-    placehoder: "Password",
-    isHiding: true
-  }
-];
-
 export default class App extends React.Component<Props> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      email: "",
-      password: ""
-    };
-  }
-
-  onChangeEmail = (value: string) => {
-    this.setState({ email: value });
-  };
-
-  onChangePassword = (value: string) => {
-    this.setState({ password: value });
-  };
-
   render() {
     return (
-      <View style={styles.container}>
-        <BorderTextInput
-          themeColor={"#1154ff"}
-          contentConfig={config}
-          values={[this.state.email, this.state.password]}
-          onChangeText={[this.onChangeEmail, this.onChangePassword]}
-        />
-      </View>
+      <Provider {...store}>
+        <View style={{ flex: 1 }}>
+          <SafeAreaView style={{ backgroundColor: "white" }} />
+          <RootStack />
+        </View>
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
-  }
-});

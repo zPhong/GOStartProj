@@ -4,15 +4,9 @@
 
 import React from "react";
 
-import {
-  View,
-  TextInput,
-  Keyboard,
-  StyleSheet,
-  Dimensions
-} from "react-native";
+import { View, TextInput, StyleSheet, Dimensions } from "react-native";
 
-import { IconList } from "Icons";
+import { IconList } from "Assets/icons";
 
 type Props = {
   themeColor: string,
@@ -27,6 +21,7 @@ type Props = {
   textColor?: string,
   placeholderColor?: string,
   style?: StyleSheet.Styles,
+  fontSize?: number,
   values: Array<string>,
   onChangeText: Array<(string) => null>
 };
@@ -52,7 +47,13 @@ export default class BorderTextInput extends React.Component<Props> {
   };
 
   renderContent() {
-    const { values, onChangeText, textColor, placeholderColor } = this.props;
+    const {
+      values,
+      onChangeText,
+      textColor,
+      placeholderColor,
+      fontSize
+    } = this.props;
 
     return this.props.contentConfig.map((config, index) => (
       <View
@@ -80,6 +81,7 @@ export default class BorderTextInput extends React.Component<Props> {
           placeholderTextColor={placeholderColor}
           style={[
             TextInputStyle.textInput,
+            { fontSize },
             IconList[config.icon] === undefined
               ? { textAlign: "center" }
               : { marginLeft: 19 }
@@ -90,21 +92,20 @@ export default class BorderTextInput extends React.Component<Props> {
   }
 
   render() {
-    const { themeColor, style, icon, contentConfig } = this.props;
+    const { themeColor, style, contentConfig } = this.props;
 
-    console.log(IconList[icon]);
     return (
-      <View
-        style={{
-          width: Dimensions.get("window").width,
-          paddingHorizontal: 32,
-          height: contentConfig.length * ITEM_HEIGHT
-        }}
-      >
+      <View style={style}>
         <View
-          style={[TextInputStyle.border, { borderColor: themeColor }, style]}
+          style={{
+            width: Dimensions.get("window").width,
+            paddingHorizontal: 32,
+            height: contentConfig.length * ITEM_HEIGHT
+          }}
         >
-          {this.renderContent()}
+          <View style={[TextInputStyle.border, { borderColor: themeColor }]}>
+            {this.renderContent()}
+          </View>
         </View>
       </View>
     );
