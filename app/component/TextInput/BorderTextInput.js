@@ -20,12 +20,15 @@ type Props = {
     icon: string,
     width: number,
     height: number,
+    color: string,
     placehoder: string,
     isHiding: boolean
   }>,
+  textColor?: string,
+  placeholderColor?: string,
   style?: StyleSheet.Styles,
-  value: string,
-  onChangeText: string => null
+  values: Array<string>,
+  onChangeText: Array<(string) => null>
 };
 
 const ITEM_HEIGHT = 64;
@@ -35,33 +38,52 @@ export default class BorderTextInput extends React.Component<Props> {
     themeColor: "black",
     contentConfig: [
       {
-        icon: "email",
+        icon: "none",
         placehoder: "Input somthing",
         isHiding: false,
         width: 20,
-        height: 20
+        height: 15
       }
     ],
-    value: undefined,
-    onChangedText: () => {}
+    textColor: "black",
+    placeholderColor: "#64231b40",
+    values: undefined,
+    onChangedText: undefined
   };
 
   renderContent() {
-    const { icon, themeColor, value, onChangeText } = this.props;
+    const { values, onChangeText, textColor, placeholderColor } = this.props;
+
     return this.props.contentConfig.map((config, index) => (
-      <View key={`textinput${index}`} style={TextInputStyle.container}>
-        {IconList[a]({
-          width: config.width,
-          height: config.width,
-          color: themeColor
-        })}
+      <View
+        key={`textinput${index}`}
+        style={[
+          TextInputStyle.container,
+          { color: textColor },
+          IconList[config.icon] === undefined
+            ? {}
+            : { justifyContent: "flex-start", paddingLeft: 21 }
+        ]}
+      >
+        {IconList[config.icon] === undefined
+          ? null
+          : IconList[config.icon]({
+              width: config.width,
+              height: config.height,
+              color: config.color
+            })}
         <TextInput
-          value={value}
-          onChangeText={onChangeText}
+          value={values[index]}
+          onChangeText={onChangeText[index]}
           secureTextEntry={config.isHiding}
           placeholder={config.placehoder}
-          placeholderTextColor={"#64231b40"}
-          style={TextInputStyle.textInput}
+          placeholderTextColor={placeholderColor}
+          style={[
+            TextInputStyle.textInput,
+            IconList[config.icon] === undefined
+              ? { textAlign: "center" }
+              : { marginLeft: 19 }
+          ]}
         />
       </View>
     ));
@@ -73,30 +95,39 @@ export default class BorderTextInput extends React.Component<Props> {
     console.log(IconList[icon]);
     return (
       <View
-        style={[
-          TextInputStyle.border,
-          { borderColor: themeColor },
-          style,
-          { height: contentConfig.length * ITEM_HEIGHT }
-        ]}
-      />
+        style={{
+          width: Dimensions.get("window").width,
+          paddingHorizontal: 32,
+          height: contentConfig.length * ITEM_HEIGHT
+        }}
+      >
+        <View
+          style={[TextInputStyle.border, { borderColor: themeColor }, style]}
+        >
+          {this.renderContent()}
+        </View>
+      </View>
     );
   }
 }
 
 const TextInputStyle = StyleSheet.create({
   border: {
-    width: Dimensions.get("window").width,
-    paddingHorizontal: 32,
+    flex: 1,
+    height: "100%",
     borderWidth: 1,
     borderRadius: 8,
     justifyContent: "space-evenly",
     alignItems: "center"
   },
   container: {
-    flexDirection: "row"
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
   textInput: {
+    flex: 1,
     fontSize: 16,
     color: "black"
   }

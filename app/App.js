@@ -8,22 +8,57 @@
  */
 
 import React from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
-
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload, Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,Shake or press menu button for dev menu"
-});
+import { StyleSheet, View } from "react-native";
+import BorderTextInput from "./component/TextInput/BorderTextInput";
 
 type Props = {};
+type State = { email: string, password: string };
+
+const config = [
+  {
+    icon: "email",
+    width: 20,
+    height: 15,
+    color: "#1154ff",
+    placehoder: "Email",
+    isHiding: false
+  },
+  {
+    icon: "password",
+    width: 16,
+    height: 20,
+    color: "#000000",
+    placehoder: "Password",
+    isHiding: true
+  }
+];
+
 export default class App extends React.Component<Props> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      email: "",
+      password: ""
+    };
+  }
+
+  onChangeEmail = (value: string) => {
+    this.setState({ email: value });
+  };
+
+  onChangePassword = (value: string) => {
+    this.setState({ password: value });
+  };
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <BorderTextInput
+          themeColor={"#1154ff"}
+          contentConfig={config}
+          values={[this.state.email, this.state.password]}
+          onChangeText={[this.onChangeEmail, this.onChangePassword]}
+        />
       </View>
     );
   }
