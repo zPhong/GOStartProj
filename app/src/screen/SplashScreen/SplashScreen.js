@@ -38,7 +38,8 @@ export default class SplashScreen extends React.Component<Props> {
   constructor(props: any) {
     super(props);
     this.state = {
-      loadingDot: 0
+      loadingDot: 0,
+      active: false
     };
   }
 
@@ -47,7 +48,7 @@ export default class SplashScreen extends React.Component<Props> {
       this.setState(prevState => ({
         loadingDot: (prevState.loadingDot + 1) % DOT_COUNT
       }));
-    });
+    }, 400);
 
     setTimeout(() => {
       clearInterval(timer);
@@ -60,9 +61,15 @@ export default class SplashScreen extends React.Component<Props> {
       <View style={SplashScreenStyle.loadingBar}>
         {Array(DOT_COUNT)
           .fill(0)
-          .map((value, index) =>
-            IconList.dot({ width: 8, height: 8, color: "red" })
-          )}
+          .map((value, index) => (
+            <View key={`dot${index}`}>
+              {IconList.dot({
+                width: 8,
+                height: 8,
+                color: index === this.state.loadingDot ? "#abb5c4" : "#ebeff7"
+              })}
+            </View>
+          ))}
       </View>
     );
   }
@@ -108,7 +115,8 @@ const SplashScreenStyle = StyleSheet.create({
   largeLogoContainer: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor: "white"
   },
   loadingBar: {
     width: 88,

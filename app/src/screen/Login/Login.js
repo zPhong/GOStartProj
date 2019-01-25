@@ -3,12 +3,15 @@
 /* eslint-disable no-undef */
 
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity, Image, Text } from "react-native";
 import BorderTextInput from "Components/TextInput/BorderTextInput";
 import FloatingButton from "Components/Button/FloatingButton";
+import { VisaLogo } from "Assets/Image";
+import { observer, inject } from "mobx-react";
+import { IconList } from "Assets/icons";
 
 type Props = {};
-type State = { email: string, password: string };
+type State = { email: string, password: string, active: boolean };
 
 const config = [
   {
@@ -29,6 +32,8 @@ const config = [
   }
 ];
 
+@inject("ThemeStore")
+@observer
 export default class Login extends React.Component<Props> {
   constructor(props: any) {
     super(props);
@@ -39,34 +44,103 @@ export default class Login extends React.Component<Props> {
   }
 
   onChangeEmail = (value: string) => {
+    if (value !== "" && this.state.password !== "") {
+      this.setState({ active: true });
+    } else this.setState({ active: false });
+
     this.setState({ email: value });
   };
 
   onChangePassword = (value: string) => {
+    if (value !== "" && this.state.email !== "") {
+      this.setState({ active: true });
+    } else this.setState({ active: false });
+
     this.setState({ password: value });
   };
 
+  onLogin = () => {
+    const result = this.checkAuth();
+    if (result) {
+      alert("OK");
+    } else {
+      alert("Username or Password incorrect");
+    }
+  };
+
+  onBack = () => {
+    console.log("A");
+    this.props.navigation.popToTop();
+  };
+
+  checkAuth = () => {
+    if (this.state.email === "Phongluc") return true;
+    return false;
+  };
+
   render() {
+    const { ThemeStore } = this.props;
     return (
       <View style={styles.container}>
+        <TouchableOpacity
+          hitSlop={{
+            top: 19,
+            left: 20,
+            bottom: 19,
+            right: 20
+          }}
+          style={{
+            position: "absolute",
+            top: 19,
+            left: 20,
+            width: 12,
+            height: 22
+          }}
+          onPress={this.onBack}
+        >
+          {IconList.back({ color: "#446595" })}
+        </TouchableOpacity>
+
+        <View
+          style={{
+            width: "100%",
+            height: "29.4%",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            marginTop: "6.6%",
+            marginBottom: "6.5%"
+          }}
+        >
+          <Image
+            source={VisaLogo}
+            style={{ width: 201, height: 80.5 }}
+            resizeMode="contain"
+          />
+        </View>
+
         <BorderTextInput
-          themeColor={"#1154ff"}
+          themeColor={ThemeStore.themeColor.primary}
           contentConfig={config}
           values={[this.state.email, this.state.password]}
           onChangeText={[this.onChangeEmail, this.onChangePassword]}
         />
+
+        <TouchableOpacity style={{ marginTop: 20 }}>
+          <Text style={{ fontSize: 16, color: "#abb5c4", textAlign: "center" }}>
+            Forgot password?
+          </Text>
+        </TouchableOpacity>
         <FloatingButton
           title={"Login"}
+          active={this.state.active}
           width={201}
           color={{
-            normal: "#1154ff",
+            normal: ThemeStore.themeColor.primary,
             deactive: "#BDBDBD",
-            pressed: "#0D47A1",
+            pressed: ThemeStore.themeColor.secondary,
             title: "white"
           }}
-          onPress={() => {
-            console.log("Clicked");
-          }}
+          onPress={this.onLogin}
         />
       </View>
     );
@@ -76,18 +150,8 @@ export default class Login extends React.Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
-    backgroundColor: "#F5FCFF"
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
+    backgroundColor: "white"
   }
 });
