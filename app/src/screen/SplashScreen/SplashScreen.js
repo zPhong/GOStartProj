@@ -5,6 +5,7 @@ import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { GroveLogo } from "Assets/Image";
 import { IconList } from "Assets/icons";
+import LoadingBar from "./LoadingBar";
 
 const DOT_COUNT = 5;
 
@@ -22,10 +23,6 @@ type Props = {
   navigation: any
 };
 
-type State = {
-  loadingDot: number
-};
-
 export default class SplashScreen extends React.Component<Props> {
   static defaultProps = {
     contentConfig: {
@@ -38,39 +35,33 @@ export default class SplashScreen extends React.Component<Props> {
   constructor(props: any) {
     super(props);
     this.state = {
-      loadingDot: 0,
-      active: false
+      loadingDot: 0
     };
   }
 
   componentDidMount() {
-    const timer = setInterval(() => {
-      this.setState(prevState => ({
-        loadingDot: (prevState.loadingDot + 1) % DOT_COUNT
-      }));
-    }, 400);
-
-    setTimeout(() => {
-      clearInterval(timer);
-      this.props.navigation.navigate(this.props.contentConfig.nextScreen);
-    }, this.props.contentConfig.timeout);
+    if (!this.props.contentConfig.loading) {
+      setTimeout(() => {
+        this.props.navigation.navigate(this.props.contentConfig.nextScreen);
+      }, this.props.contentConfig.timeout);
+    } else {
+      this.loadingBar.start();
+    }
   }
+
+  navigateToNextScreen = () => {
+    this.props.navigation.navigate(this.props.contentConfig.nextScreen);
+  };
 
   renderLoading() {
     return (
-      <View style={SplashScreenStyle.loadingBar}>
-        {Array(DOT_COUNT)
-          .fill(0)
-          .map((value, index) => (
-            <View key={`dot${index}`}>
-              {IconList.dot({
-                width: 8,
-                height: 8,
-                color: index === this.state.loadingDot ? "#abb5c4" : "#ebeff7"
-              })}
-            </View>
-          ))}
-      </View>
+      <LoadingBar
+        onRef={ref => (this.loadingBar = ref)}
+        timeout={this.props.contentConfig.timeout}
+        style={SplashScreenStyle.loadingBar}
+        count={DOT_COUNT}
+        runAfter={this.navigateToNextScreen}
+      />
     );
   }
 
