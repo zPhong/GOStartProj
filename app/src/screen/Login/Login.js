@@ -62,7 +62,7 @@ export default class Login extends React.Component<Props> {
   onLogin = () => {
     const result = this.checkAuth();
     if (result) {
-      alert("OK");
+      this.props.navigation.navigate("Quote");
     } else {
       alert("Username or Password incorrect");
     }

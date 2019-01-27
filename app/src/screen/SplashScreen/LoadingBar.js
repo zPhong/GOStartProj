@@ -47,6 +47,7 @@ export default class LoadingBar extends React.Component<Props> {
     this.props.onRef(undefined);
   }
 
+  //start loading animation
   start = () => {
     this.timer = setInterval(() => {
       this.setState(prevState => ({
@@ -54,6 +55,7 @@ export default class LoadingBar extends React.Component<Props> {
       }));
     }, 400);
 
+    //stop by some event without timing
     if (this.props.timeout !== -1) {
       setTimeout(() => {
         this.stop();

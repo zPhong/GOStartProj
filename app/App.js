@@ -9,6 +9,8 @@ import store from "store";
 import SplashScreen from "Screens/SplashScreen/SplashScreen";
 import LoginStack from "Screens/Login/LoginStack";
 import { LargeAppLogo } from "Assets/Image";
+import QuoteScreen from "./src/screen/QuoteScreen/QuoteScreen";
+import { bgQuote } from "./assets/Image";
 
 const RootStack = createAppContainer(
   createSwitchNavigator(
@@ -30,6 +32,24 @@ const RootStack = createAppContainer(
       },
       LoginStack: {
         screen: LoginStack,
+        navigationOptions: {
+          header: null
+        }
+      },
+      Quote: {
+        screen: props => (
+          <QuoteScreen
+            {...props}
+            config={{
+              image: bgQuote,
+              quote: {
+                content:
+                  "Aim for the moon. If you miss,\n you may hit the star.",
+                author: "W. Clement Stone"
+              }
+            }}
+          />
+        ),
         navigationOptions: {
           header: null
         }

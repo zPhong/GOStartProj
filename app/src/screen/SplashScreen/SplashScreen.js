@@ -4,7 +4,6 @@
 import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { GroveLogo } from "Assets/Image";
-import { IconList } from "Assets/icons";
 import LoadingBar from "./LoadingBar";
 
 const DOT_COUNT = 5;
