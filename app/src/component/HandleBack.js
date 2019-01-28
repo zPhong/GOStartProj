@@ -6,7 +6,7 @@ import { withNavigation } from "react-navigation";
 import { BackHandler } from "react-native";
 
 type Props = {
-  children: any,
+  children: React.Node,
   onBack: any,
   navigation: any
 };

@@ -14,7 +14,8 @@ const Stack = createStackNavigator({
   CompanyCode: {
     screen: CompanyCode,
     navigationOptions: {
-      header: null
+      header: null,
+      gesturesEnabled: false
     }
   },
   Loading: {
@@ -30,13 +31,15 @@ const Stack = createStackNavigator({
       />
     ),
     navigationOptions: {
-      header: null
+      header: null,
+      gesturesEnabled: false
     }
   },
   Login: {
     screen: Login,
     navigationOptions: {
-      header: null
+      header: null,
+      gesturesEnabled: false
     }
   }
 });

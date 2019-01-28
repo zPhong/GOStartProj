@@ -36,8 +36,6 @@ export default class SplashScreen extends React.Component<Props> {
       setTimeout(() => {
         this.props.navigation.navigate(this.props.contentConfig.nextScreen);
       }, this.props.contentConfig.timeout);
-    } else {
-      this.loadingBar.start();
     }
   }
 
@@ -50,7 +48,7 @@ export default class SplashScreen extends React.Component<Props> {
   renderLoading() {
     return (
       <LoadingBar
-        onRef={ref => (this.loadingBar = ref)}
+        active
         timeout={this.props.contentConfig.timeout}
         style={SplashScreenStyle.loadingBar}
         count={DOT_COUNT}

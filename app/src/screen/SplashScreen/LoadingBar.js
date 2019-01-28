@@ -5,6 +5,7 @@
 import React from "react";
 import { View } from "react-native";
 import { IconList } from "Assets/icons";
+import type { ____ViewStyleProp_Internal as Style } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 type Props = {
   timeout: number,
@@ -13,8 +14,8 @@ type Props = {
     deactive: string
   },
   count: number,
-  style?: Object | Array<Object>,
-  onRef: any,
+  style?: Style,
+  active?: boolean,
   runAfter: () => null
 };
 
@@ -29,6 +30,7 @@ export default class LoadingBar extends React.Component<Props, State> {
       active: "#abb5c4",
       deactive: "#ebeff7"
     },
+    active: true,
     count: 5
   };
   constructor(props: any) {
@@ -39,12 +41,13 @@ export default class LoadingBar extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    if (this.props.onRef != null) {
-      this.props.onRef(this);
-    }
+    this.start();
   }
-  componentWillUnmount() {
-    this.props.onRef(undefined);
+
+  componentWillUpdate() {
+    if (!this.props.active) {
+      this.stop();
+    }
   }
 
   timer: any;
@@ -57,7 +60,7 @@ export default class LoadingBar extends React.Component<Props, State> {
       }));
     }, 400);
 
-    //stop by some event without timing
+    //stop by timing
     if (this.props.timeout !== -1) {
       setTimeout(() => {
         this.stop();

@@ -1,7 +1,9 @@
 /* eslint-disable no-undef */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-extraneous-dependencies */
-import React from "react";
+// @flow
+
+import * as React from "react";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import { Provider } from "mobx-react";
 import { SafeAreaView, View } from "react-native";
@@ -62,7 +64,7 @@ const RootStack = createAppContainer(
 );
 
 type Props = {};
-type State = { currentScreen: string };
+type State = { currentScreen: string | null };
 export default class App extends React.Component<Props, State> {
   state = {
     currentScreen: "SplashScreen"

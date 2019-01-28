@@ -11,7 +11,8 @@ import { observer, inject } from "mobx-react";
 import { IconList } from "Assets/icons";
 
 type Props = {
-  navigation: any
+  navigation: any,
+  ThemeStore: any
 };
 type State = { email: string, password: string, active: boolean };
 
@@ -81,32 +82,18 @@ export default class Login extends React.Component<Props, State> {
     const { ThemeStore } = this.props;
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          hitSlop={{
-            top: 19,
-            left: 20,
-            bottom: 19,
-            right: 20
-          }}
-          style={{
-            position: "absolute",
-            top: 19,
-            left: 20,
-            width: 12,
-            height: 22
-          }}
-          onPress={this.onBack}
-        >
-          {IconList.back({ color: "#446595" })}
+        <TouchableOpacity style={styles.backButton} onPress={this.onBack}>
+          {IconList.back({ color: "#446595", width: 12, height: 22 })}
         </TouchableOpacity>
 
         <View
           style={{
             width: "100%",
-            height: "29.4%",
+            height: "33%",
+            minheight: 80.5,
             justifyContent: "flex-end",
             alignItems: "center",
-            marginTop: "6.6%",
+            marginTop: "3%",
             marginBottom: "6.5%"
           }}
         >
@@ -118,6 +105,7 @@ export default class Login extends React.Component<Props, State> {
         </View>
 
         <BorderTextInput
+          style={{ width: "100%" }}
           themeColor={ThemeStore.themeColor.primary}
           contentConfig={config}
           values={[this.state.email, this.state.password]}
@@ -152,5 +140,15 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: "white"
+  },
+  backButton: {
+    position: "absolute",
+    top: 19,
+    left: 20,
+    width: 24,
+    height: 44,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 2
   }
 });

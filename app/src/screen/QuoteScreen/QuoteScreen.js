@@ -1,10 +1,14 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable no-undef */
 /* eslint-disable import/no-extraneous-dependencies */
+
 import React from "react";
-import { View, Image, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Image, Text, StyleSheet } from "react-native";
 import FloatingButton from "Components/Button/FloatingButton";
 import { observer, inject } from "mobx-react";
 
 type Props = {
+  ThemeStore: any,
   config: {
     image: any,
     quote: {

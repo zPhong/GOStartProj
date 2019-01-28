@@ -4,9 +4,7 @@
 import { observable, action } from "mobx";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "Assets/Color";
 
-type Props = {};
-
-export default class LoginStore<Props> {
+export default class ThemeStore {
   @observable themeColor = {
     primary: PRIMARY_COLOR,
     secondary: SECONDARY_COLOR

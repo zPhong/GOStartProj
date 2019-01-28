@@ -13,7 +13,8 @@ import { observer, inject } from "mobx-react";
 import { Themelist } from "../../../data";
 
 type Props = {
-  navigation: any
+  navigation: any,
+  ThemeStore: any
 };
 type State = { code: string, active: boolean };
 
@@ -74,6 +75,7 @@ export default class CompanyCode extends React.Component<Props, State> {
           />
         </View>
         <BorderTextInput
+          style={{ width: "100%" }}
           themeColor={PRIMARY_COLOR}
           contentConfig={config}
           fontSize={22}

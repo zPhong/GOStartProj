@@ -5,23 +5,18 @@
 
 import React from "react";
 
-import { View, TextInput, StyleSheet, Dimensions } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 
 import { IconList } from "Assets/icons";
+import type { TextInputConfig } from "GOStartProj/app/type";
+import type { ____ViewStyleProp_Internal as Style } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 type Props = {
   themeColor: string,
-  contentConfig: Array<{
-    icon?: string,
-    width?: number,
-    height?: number,
-    color?: string,
-    placehoder?: string,
-    isHiding?: boolean
-  }>,
+  contentConfig: Array<TextInputConfig>,
   textColor?: string,
   placeholderColor?: string,
-  style?: Object | Array<Object>,
+  style?: Style,
   fontSize?: number,
   values: Array<string>,
   onChangeText: any
@@ -99,7 +94,7 @@ export default class BorderTextInput extends React.Component<Props> {
       <View style={style}>
         <View
           style={{
-            width: Dimensions.get("window").width,
+            width: "100%",
             paddingHorizontal: 32,
             height: contentConfig.length * ITEM_HEIGHT
           }}
