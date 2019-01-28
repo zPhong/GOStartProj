@@ -6,9 +6,9 @@ import React from "react";
 import Svg, { Circle } from "react-native-svg";
 
 type Props = {
-  width: number,
-  height: number,
-  color: string
+  width?: number,
+  height?: number,
+  color?: string
 };
 
 const DotIcon = (props: Props) => (

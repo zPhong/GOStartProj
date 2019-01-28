@@ -31,13 +31,6 @@ export default class SplashScreen extends React.Component<Props> {
     }
   };
 
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      loadingDot: 0
-    };
-  }
-
   componentDidMount() {
     if (!this.props.contentConfig.loading) {
       setTimeout(() => {
@@ -48,7 +41,9 @@ export default class SplashScreen extends React.Component<Props> {
     }
   }
 
-  navigateToNextScreen = () => {
+  loadingBar: LoadingBar;
+
+  navigateToNextScreen: any = () => {
     this.props.navigation.navigate(this.props.contentConfig.nextScreen);
   };
 

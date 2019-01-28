@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import { View, Image, Text, StyleSheet, SafeAreaView } from "react-native";
 import FloatingButton from "Components/Button/FloatingButton";
 import { observer, inject } from "mobx-react";
 
@@ -49,9 +49,9 @@ export default class QuoteScreen extends React.Component<Props> {
           <View style={{ flex: 1 }} />
         </View>
         <FloatingButton
-          title={"Login"}
+          title={"Continue"}
           active
-          width={201}
+          width={125}
           color={{
             normal: ThemeStore.themeColor.primary,
             deactive: "#BDBDBD",

@@ -60,16 +60,42 @@ const RootStack = createAppContainer(
     }
   )
 );
-// gets the current screen from navigation state
 
 type Props = {};
-export default class App extends React.Component<Props> {
+type State = { currentScreen: string };
+export default class App extends React.Component<Props, State> {
+  state = {
+    currentScreen: "SplashScreen"
+  };
+
+  getCurrentRouteName(navigationState) {
+    if (!navigationState) {
+      return null;
+    }
+    const route = navigationState.routes[navigationState.index];
+    // dive into nested navigators
+    if (route.routes) {
+      return this.getCurrentRouteName(route);
+    }
+    return route.routeName;
+  }
+
+  renderSafeArea() {
+    if (this.state.currentScreen === "Quote") return null;
+    return <SafeAreaView style={{ backgroundColor: "white" }} />;
+  }
+
   render() {
     return (
       <Provider {...store}>
         <View style={{ flex: 1 }}>
-          <SafeAreaView style={{ backgroundColor: "white" }} />
-          <RootStack />
+          {this.renderSafeArea()}
+          <RootStack
+            onNavigationStateChange={(prevState, currentState) => {
+              const currentScreen = this.getCurrentRouteName(currentState);
+              this.setState({ currentScreen });
+            }}
+          />
         </View>
       </Provider>
     );

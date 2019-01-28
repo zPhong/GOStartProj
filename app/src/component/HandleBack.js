@@ -5,9 +5,13 @@ import React from "react";
 import { withNavigation } from "react-navigation";
 import { BackHandler } from "react-native";
 
-type Props = {};
+type Props = {
+  children: any,
+  onBack: any,
+  navigation: any
+};
 
-class HandleBack extends React.Component {
+class HandleBack extends React.Component<Props> {
   constructor(props) {
     super(props);
     this.didFocus = props.navigation.addListener("didFocus", () =>
@@ -28,6 +32,9 @@ class HandleBack extends React.Component {
   }
 
   onBack = () => this.props.onBack();
+
+  didFocus: any;
+  willBlur: any;
 
   render() {
     return this.props.children;

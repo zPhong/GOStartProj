@@ -13,7 +13,7 @@ type Props = {
     deactive: string
   },
   count: number,
-  style?: StyleSheet.Styles,
+  style?: Object | Array<Object>,
   onRef: any,
   runAfter: () => null
 };
@@ -22,7 +22,7 @@ type State = {
   loadingDot: number
 };
 
-export default class LoadingBar extends React.Component<Props> {
+export default class LoadingBar extends React.Component<Props, State> {
   static defaultProps = {
     timeout: 10000,
     color: {
@@ -46,6 +46,8 @@ export default class LoadingBar extends React.Component<Props> {
   componentWillUnmount() {
     this.props.onRef(undefined);
   }
+
+  timer: any;
 
   //start loading animation
   start = () => {

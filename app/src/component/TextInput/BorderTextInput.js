@@ -1,6 +1,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
+// @flow
 
 import React from "react";
 
@@ -11,19 +12,19 @@ import { IconList } from "Assets/icons";
 type Props = {
   themeColor: string,
   contentConfig: Array<{
-    icon: string,
-    width: number,
-    height: number,
-    color: string,
-    placehoder: string,
-    isHiding: boolean
+    icon?: string,
+    width?: number,
+    height?: number,
+    color?: string,
+    placehoder?: string,
+    isHiding?: boolean
   }>,
   textColor?: string,
   placeholderColor?: string,
-  style?: StyleSheet.Styles,
+  style?: Object | Array<Object>,
   fontSize?: number,
   values: Array<string>,
-  onChangeText: Array<(string) => null>
+  onChangeText: any
 };
 
 const ITEM_HEIGHT = 64;
@@ -46,7 +47,7 @@ export default class BorderTextInput extends React.Component<Props> {
     onChangedText: undefined
   };
 
-  renderContent() {
+  renderContent(): Array<any> {
     const {
       values,
       onChangeText,
@@ -55,7 +56,7 @@ export default class BorderTextInput extends React.Component<Props> {
       fontSize
     } = this.props;
 
-    return this.props.contentConfig.map((config, index) => (
+    return this.props.contentConfig.map((config: any, index: number) => (
       <View
         key={`textinput${index}`}
         style={[

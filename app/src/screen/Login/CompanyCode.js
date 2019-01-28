@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-undef */
+// @flow
 
 import React from "react";
 import { StyleSheet, View, Image, TouchableOpacity, Text } from "react-native";
@@ -11,7 +12,9 @@ import { PRIMARY_COLOR } from "Assets/Color";
 import { observer, inject } from "mobx-react";
 import { Themelist } from "../../../data";
 
-type Props = {};
+type Props = {
+  navigation: any
+};
 type State = { code: string, active: boolean };
 
 const config = [
@@ -24,14 +27,11 @@ const config = [
 
 @inject("ThemeStore")
 @observer
-export default class CompanyCode extends React.Component<Props> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      code: "",
-      active: false
-    };
-  }
+export default class CompanyCode extends React.Component<Props, State> {
+  state = {
+    code: "",
+    active: false
+  };
 
   onChangeText = (value: string) => {
     if (value !== "") this.setState({ active: true });

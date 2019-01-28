@@ -1,6 +1,8 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-undef */
+// @flow
+
 import React from "react";
 
 import {
@@ -19,42 +21,44 @@ type Props = {
     normal?: string,
     deactive?: string,
     pressed?: string,
-    title: string
+    title?: string
   },
   title?: string,
-  icon?: { name: string, width: number, height: number },
+  icon?: { name?: string, width?: number, height?: number },
   active?: boolean,
-  onPress: null => null,
-  onLongPress?: null => null,
-  style: StyleSheet.Styles
+  onPress: any,
+  onLongPress?: any,
+  style: Object | Array<Object>
 };
 
 type State = {
   btnColor: string
 };
 
-export default class FloatingButton extends React.Component<Props> {
+export default class FloatingButton extends React.Component<Props, State> {
   static defaultProps = {
     active: true,
-    icon: "none",
+    icon: {
+      name: "none",
+      width: 0,
+      height: 0
+    },
     title: "Click me!",
     width: undefined,
     color: {
       normal: "#1154ff",
       deactive: "#abb5c4",
-      pressed: "#1154ff"
+      pressed: "#1154ff",
+      title: "white"
     },
     onPress: () => {},
     onLongPress: () => {},
     style: undefined
   };
 
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      btnColor: this.props.color.normal
-    };
-  }
+  state = {
+    btnColor: this.props.color.normal
+  };
 
   onPressIn = () => {
     if (this.props.color.pressed === undefined) return;

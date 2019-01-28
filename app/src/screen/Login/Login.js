@@ -10,7 +10,9 @@ import { VisaLogo } from "Assets/Image";
 import { observer, inject } from "mobx-react";
 import { IconList } from "Assets/icons";
 
-type Props = {};
+type Props = {
+  navigation: any
+};
 type State = { email: string, password: string, active: boolean };
 
 const config = [
@@ -34,14 +36,12 @@ const config = [
 
 @inject("ThemeStore")
 @observer
-export default class Login extends React.Component<Props> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      email: "",
-      password: ""
-    };
-  }
+export default class Login extends React.Component<Props, State> {
+  state = {
+    email: "",
+    password: "",
+    active: false
+  };
 
   onChangeEmail = (value: string) => {
     if (value !== "" && this.state.password !== "") {
@@ -69,7 +69,6 @@ export default class Login extends React.Component<Props> {
   };
 
   onBack = () => {
-    console.log("A");
     this.props.navigation.popToTop();
   };
 
