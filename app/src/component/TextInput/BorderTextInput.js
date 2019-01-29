@@ -8,8 +8,16 @@ import React from "react";
 import { View, TextInput, StyleSheet } from "react-native";
 
 import { IconList } from "Assets/icons";
-import type { TextInputConfig } from "GOStartProj/app/type";
 import type { ____ViewStyleProp_Internal as Style } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+
+type TextInputConfig = {|
+  icon?: string,
+  width?: number,
+  height?: number,
+  color?: string,
+  placehoder?: string,
+  isHiding?: boolean
+|};
 
 type Props = {
   themeColor: string,
@@ -19,7 +27,7 @@ type Props = {
   style?: Style,
   fontSize?: number,
   values: Array<string>,
-  onChangeText: any
+  onChangeText: Array<(string) => void>
 };
 
 const ITEM_HEIGHT = 64;

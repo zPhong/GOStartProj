@@ -4,13 +4,18 @@
 // @flow
 
 import React from "react";
-
 import { TouchableHighlight, View, Text, StyleSheet } from "react-native";
-
 import { IconList } from "Assets/icons";
-import type { ButtonColor, IconConfig } from "GOStartProj/app/type";
-
 import type { ____ViewStyleProp_Internal as Style } from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+
+type ButtonColor = {
+  normal?: string,
+  deactive?: string,
+  pressed?: string,
+  title?: string
+};
+
+type IconConfig = { name?: string, width?: number, height?: number };
 
 type Props = {
   width?: number,
@@ -18,8 +23,8 @@ type Props = {
   title?: string,
   icon?: IconConfig,
   active?: boolean,
-  onPress: any,
-  onLongPress?: any,
+  onPress: () => void,
+  onLongPress?: () => void,
   style?: Style
 };
 
@@ -43,7 +48,6 @@ export default class FloatingButton extends React.Component<Props, State> {
       pressed: "#1154ff",
       title: "white"
     },
-    onPress: () => {},
     onLongPress: () => {},
     style: undefined
   };
@@ -119,7 +123,6 @@ const FloatingButtonStyle = StyleSheet.create({
     bottom: "4.3%"
   },
   container: {
-    flex: 1,
     height: 44,
     borderRadius: 22,
     justifyContent: "center",

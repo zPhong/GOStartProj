@@ -3,6 +3,7 @@ import { EmailIcon } from "./Email";
 import { PasswordIcon } from "./Password";
 import { DotIcon } from "./Dot";
 import { BackIcon } from "./Back";
+import QuoteBg from "./QuoteBg";
 
 const IconList = {
   email: EmailIcon,
@@ -11,4 +12,4 @@ const IconList = {
   back: BackIcon
 };
 
-export { IconList };
+export { IconList, QuoteBg };

@@ -5,6 +5,7 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 import FloatingButton from "Components/Button/FloatingButton";
+import { QuoteBg } from "Assets/icons";
 import { observer, inject } from "mobx-react";
 
 type Props = {
@@ -43,6 +44,7 @@ export default class QuoteScreen extends React.Component<Props> {
         />
         <View style={{ flex: 1 }}>
           <View style={QuoteStyle.content}>
+            <QuoteBg />
             <Text style={QuoteStyle.quote}>
               {this.props.config.quote.content}
             </Text>
@@ -86,6 +88,7 @@ const QuoteStyle = StyleSheet.create({
     alignItems: "center"
   },
   quote: {
+    marginTop: -74,
     textAlign: "center",
     fontSize: 24,
     color: "#314057"

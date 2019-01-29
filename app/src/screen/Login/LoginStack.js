@@ -10,39 +10,37 @@ import Login from "Screens/Login/Login";
 import { VisaLogo } from "Assets/Image";
 import HandleBack from "Components/HandleBack";
 
-const Stack = createStackNavigator({
-  CompanyCode: {
-    screen: CompanyCode,
-    navigationOptions: {
-      header: null,
-      gesturesEnabled: false
+const Stack = createStackNavigator(
+  {
+    CompanyCode: {
+      screen: CompanyCode
+    },
+    Loading: {
+      screen: props => (
+        <SplashScreen
+          {...props}
+          contentConfig={{
+            logo: { image: VisaLogo, width: 249, height: 105 },
+            nextScreen: "Login",
+            timeout: 3000,
+            loading: true
+          }}
+        />
+      )
+    },
+    Login: {
+      screen: Login
     }
   },
-  Loading: {
-    screen: props => (
-      <SplashScreen
-        {...props}
-        contentConfig={{
-          logo: { image: VisaLogo, width: 249, height: 105 },
-          nextScreen: "Login",
-          timeout: 3000,
-          loading: true
-        }}
-      />
-    ),
+
+  {
+    mode: "modal",
+    headerMode: "none",
     navigationOptions: {
-      header: null,
-      gesturesEnabled: false
-    }
-  },
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      header: null,
       gesturesEnabled: false
     }
   }
-});
+);
 
 type Props = {
   navigation: any
